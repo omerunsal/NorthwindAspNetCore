@@ -10,9 +10,9 @@ namespace DataAccess.Concrete.EntityFramework.Context
 	{
 		protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 		{
-			optionsBuilder.UseSqlServer(connectionString: @"Server=(localdb)\mssqllocaldb;Database=Northwind;Trusted_Connection=true");
+			optionsBuilder.UseSqlServer(connectionString:@"Server=(localdb)\mssqllocaldb;Database=Northwind;Trusted_Connection=true");
 		}
 
-		public DbSet<Product> Product { get; set; }
+		public DbSet<Product> Products { get; set; }
 	}
 }
