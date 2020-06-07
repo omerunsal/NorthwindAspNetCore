@@ -6,6 +6,7 @@ using DataAccess.Concrete.EntityFramework;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using Core.Utilities.Security.JWT;
 
 namespace Business.DependencyResolvers.Autofac
 {
@@ -19,6 +20,9 @@ namespace Business.DependencyResolvers.Autofac
 			builder.RegisterType<EfCategoryDal>().As<ICategoryDal>();
 			builder.RegisterType<EfProductDal>().As<IProductDal>();
 			builder.RegisterType<EfUserDal>().As<IUserDal>();
+
+			builder.RegisterType<AuthManager>().As<IAuthService>();
+			builder.RegisterType<JwtHelper>().As<ITokenHelper>();
 		}
 	}
 }
