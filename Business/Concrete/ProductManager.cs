@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Business.ValidationRules.FluentValidation;
+using Core.Aspects.Autofac.Caching;
 using Core.Aspects.Autofac.Transaction;
 using Core.CrossCuttingConcerns.Validation;
 using FluentValidation;
@@ -24,6 +25,7 @@ namespace Business.Concrete
 		}
 
 		[ValidatonAspect(typeof(ProductValidator),Priority = 1)]
+		[CacheRemoveAspect(pattern:"IProductService.Get")]
 		public IResult Add(Product product)
 		{
 			//Business codes
@@ -46,7 +48,7 @@ namespace Business.Concrete
 		{
 			return new SuccessDataResult<List<Product>>(_productDal.GetList().ToList());
 		}
-
+		[CacheAspect(duration:10)]
 		public IDataResult<List<Product>> GetListByCategory(int categoryId)
 		{
 			return new SuccessDataResult<List<Product>>(_productDal.GetList(filter: p => p.CategoryId == categoryId).ToList());
