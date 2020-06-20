@@ -7,6 +7,11 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Business.ValidationRules.FluentValidation;
+using Core.Aspects.Autofac.Transaction;
+using Core.CrossCuttingConcerns.Validation;
+using FluentValidation;
+using Core.Aspects.Autofac.Validation;
 
 namespace Business.Concrete
 {
@@ -18,6 +23,7 @@ namespace Business.Concrete
 			_productDal = productDal;
 		}
 
+		[ValidatonAspect(typeof(ProductValidator),Priority = 1)]
 		public IResult Add(Product product)
 		{
 			//Business codes
@@ -49,6 +55,13 @@ namespace Business.Concrete
 		public IResult Update(Product product)
 		{
 			_productDal.Update(product);
+			return new SuccessResult(Messages.ProductUpdated);
+		}
+		[TransactionScopeAspect]
+		public IResult TransactionalOperation(Product product)
+		{
+			_productDal.Update(product);
+			_productDal.Add(product);
 			return new SuccessResult(Messages.ProductUpdated);
 		}
 	}
