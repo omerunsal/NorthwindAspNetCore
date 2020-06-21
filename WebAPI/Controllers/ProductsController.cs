@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Business.Abstract;
+using Core.Entities.Concrete;
+using Core.Extensions;
 using Entities.Concrete;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -23,8 +25,10 @@ namespace WebAPI.Controllers
 
 
         [HttpGet(template:"getall")]
-        [Authorize(Roles = "Product.List")]
+        //[Authorize(Roles = "Product.List")]
         public IActionResult GetList() {
+
+            
             var result = _productService.GetList();
 
             if (result.Success)
